@@ -4,7 +4,7 @@ A standalone C# executable that connects to a SQL Server database, retrieves ses
 
 ## Features
 
-- Connects to SQL Server database (VALSEG23/GREEN)
+- Connects to SQL Server database (VALSEG23/PLATFORM)
 - Executes SQL query to retrieve Title and Content from dbo.tblSessionFormImage
 - Decodes base64 encoded content
 - Saves content as PDF with the title as filename
@@ -16,7 +16,7 @@ A standalone C# executable that connects to a SQL Server database, retrieves ses
 ### Prerequisites
 
 1. .NET 8.0 SDK or higher
-2. Access to the VALSEG23/GREEN database
+2. Access to the VALSEG23/PLATFORM database
 3. Windows machine (for the executable)
 
 ### Installation
@@ -27,7 +27,7 @@ A standalone C# executable that connects to a SQL Server database, retrieves ses
 {
     "id": "1",
     "server": "VALSEG23",
-    "database": "GREEN",
+    "database": "PLATFORM",
     "username": "your_username",
     "password": "your_password",
     "trusted_connection": false
@@ -40,7 +40,7 @@ Edit the `config.json` file with your database credentials:
 
 - `id`: The ID of the record to retrieve from tblSessionFormImage
 - `server`: Database server name (VALSEG23)
-- `database`: Database name (GREEN)
+- `database`: Database name (PLATFORM)
 - `username`: Your database username
 - `password`: Your database password
 - `trusted_connection`: Set to true if using Windows authentication
