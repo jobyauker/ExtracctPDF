@@ -4,6 +4,5 @@
     "database": "GREEN",
     "username": "your_username",
     "password": "your_password",
-    "driver": "{ODBC Driver 17 for SQL Server}",
-    "trusted_connection": "no"
+    "trusted_connection": false
 }

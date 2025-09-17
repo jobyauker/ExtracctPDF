@@ -1,6 +1,6 @@
 # Database PDF Generator
 
-A standalone executable that connects to a SQL Server database, retrieves session form image data, decodes the content, and saves it as a PDF file.
+A standalone C# executable that connects to a SQL Server database, retrieves session form image data, decodes the content, and saves it as a PDF file.
 
 ## Features
 
@@ -9,22 +9,19 @@ A standalone executable that connects to a SQL Server database, retrieves sessio
 - Decodes base64 encoded content
 - Saves content as PDF with the title as filename
 - Configurable via JSON config file
+- Self-contained executable (no .NET runtime required on target machine)
 
 ## Setup
 
 ### Prerequisites
 
-1. Python 3.8 or higher
-2. SQL Server ODBC Driver (ODBC Driver 17 for SQL Server recommended)
-3. Access to the VALSEG23/GREEN database
+1. .NET 8.0 SDK or higher
+2. Access to the VALSEG23/GREEN database
+3. Windows machine (for the executable)
 
 ### Installation
 
-1. Install Python dependencies:
-```bash
-pip install -r requirements.txt
-```
-
+1. Clone or download the project files
 2. Configure the application by editing `config.json`:
 ```json
 {
@@ -33,8 +30,7 @@ pip install -r requirements.txt
     "database": "GREEN",
     "username": "your_username",
     "password": "your_password",
-    "driver": "{ODBC Driver 17 for SQL Server}",
-    "trusted_connection": "no"
+    "trusted_connection": false
 }
 ```
 
@@ -47,22 +43,25 @@ Edit the `config.json` file with your database credentials:
 - `database`: Database name (GREEN)
 - `username`: Your database username
 - `password`: Your database password
-- `driver`: ODBC driver to use
-- `trusted_connection`: Set to "yes" if using Windows authentication
+- `trusted_connection`: Set to true if using Windows authentication
 
 ## Usage
 
-### Running the Python script directly:
+### Building and running from source:
 ```bash
-python main.py
+# Windows
+build.bat
+
+# Linux/Mac
+./build.sh
 ```
 
-### Building a standalone executable:
+### Running the executable:
 ```bash
-python build.py
+./publish/DatabasePDFGenerator.exe
 ```
 
-This will create `dist/DatabasePDFGenerator.exe` which can be run on any Windows machine without requiring Python installation.
+The build process creates a self-contained executable in the `publish` directory that can be run on any Windows machine without requiring .NET installation.
 
 ## Output
 
@@ -78,17 +77,42 @@ The application includes comprehensive error handling for:
 - Content decoding errors
 - PDF generation problems
 - File system errors
+- Configuration validation
 
-## Requirements
+## Dependencies
 
-- pyodbc: Database connectivity
-- reportlab: PDF generation
-- Pillow: Image processing
-- pyinstaller: Executable creation
+- **System.Data.SqlClient**: SQL Server database connectivity
+- **iTextSharp**: PDF generation and manipulation
+- **Newtonsoft.Json**: JSON configuration file handling
+
+## Project Structure
+
+- `Program.cs`: Main application logic
+- `DatabasePDFGenerator.csproj`: Project file with dependencies
+- `config.json`: Configuration file
+- `build.bat` / `build.sh`: Build scripts
+- `README.md`: This documentation
 
 ## Troubleshooting
 
-1. **Database Connection Issues**: Verify your database credentials and ensure the SQL Server is accessible
-2. **ODBC Driver Issues**: Install the appropriate ODBC driver for your SQL Server version
-3. **Content Decoding Issues**: The application assumes content is base64 encoded. Modify the decode_content method if your data uses a different encoding
-4. **PDF Generation Issues**: Ensure the output directory is writable and you have sufficient disk space
+1. **Database Connection Issues**: 
+   - Verify your database credentials
+   - Ensure the SQL Server is accessible from your network
+   - Check firewall settings
+
+2. **Build Issues**:
+   - Ensure .NET 8.0 SDK is installed
+   - Run `dotnet restore` to restore NuGet packages
+
+3. **Content Decoding Issues**: 
+   - The application assumes content is base64 encoded
+   - Modify the `DecodeContent` method if your data uses a different encoding
+
+4. **PDF Generation Issues**: 
+   - Ensure the output directory is writable
+   - Check available disk space
+   - Verify the content can be processed as an image or text
+
+5. **Runtime Issues**:
+   - Ensure the executable has proper permissions
+   - Check that config.json is in the same directory as the executable
