@@ -2,7 +2,7 @@
     "id": "1",
     "server": "VALSEG23",
     "database": "PLATFORM",
-    "username": "your_username",
-    "password": "your_password",
-    "trusted_connection": false
+    "username": "",
+    "password": "",
+    "trusted_connection": true
 }

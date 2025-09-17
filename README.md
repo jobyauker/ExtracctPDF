@@ -28,22 +28,22 @@ A standalone C# executable that connects to a SQL Server database, retrieves ses
     "id": "1",
     "server": "VALSEG23",
     "database": "PLATFORM",
-    "username": "your_username",
-    "password": "your_password",
-    "trusted_connection": false
+    "username": "",
+    "password": "",
+    "trusted_connection": true
 }
 ```
 
 ### Configuration
 
-Edit the `config.json` file with your database credentials:
+Edit the `config.json` file with your database settings:
 
 - `id`: The ID of the record to retrieve from tblSessionFormImage
 - `server`: Database server name (VALSEG23)
 - `database`: Database name (PLATFORM)
-- `username`: Your database username
-- `password`: Your database password
-- `trusted_connection`: Set to true if using Windows authentication
+- `username`: Leave empty when using Windows authentication
+- `password`: Leave empty when using Windows authentication
+- `trusted_connection`: Set to true to use Windows authentication (current user credentials)
 
 ## Usage
 
@@ -96,9 +96,10 @@ The application includes comprehensive error handling for:
 ## Troubleshooting
 
 1. **Database Connection Issues**: 
-   - Verify your database credentials
-   - Ensure the SQL Server is accessible from your network
+   - Ensure your Windows user account has access to the VALSEG23/PLATFORM database
+   - Verify the SQL Server is accessible from your network
    - Check firewall settings
+   - If using domain authentication, ensure you're logged in with the correct domain account
 
 2. **Build Issues**:
    - Ensure .NET 8.0 SDK is installed
